@@ -1,23 +1,28 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import './Rowpost.css'
+import {apikey,baseUrl, imageurl} from '../../constants/constants'
+import axios from '../../axios' 
 function Rowpost() {
+  const [movies,setmovies] =useState([])
+  useEffect(() => {
+   axios.get(`discover/tv?api_key=${apikey}&with_networks=213`).then((response)=>{
+    console.log(response.data)  
+    setmovies(response.data.results)
+
+   })
+  }, [])
+  
   return (
     <div className='row'>
-        <h2>Title</h2>
+        <h2>Netflix Orginals</h2>
         <div className="posters">
-        <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
-            <img className='poster' src="https://i.ytimg.com/vi/RlqQdqN9JIc/maxresdefault.jpg" alt="" />
+          {movies.map((obj)=>{
+            return(
+              <img className='poster' src={`${imageurl+obj.backdrop_path}`} alt="" />
 
+            )
+
+          })}
         </div>
     </div>
   )
